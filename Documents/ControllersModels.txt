@@ -1,0 +1,200 @@
+project
+-------
+
+
+
+
+
+                                                                                                                        _ likeWall   - createLike();  
+                                                                                                                       |               deleteLike();
+                                                                                                                       |
+                                                                                                                       |-commentWall - createComment();
+            |-> userController ->createUser(), deleteUser(), viewProfile(); getAllUsers(); getAllStates(), 	       |
+									    (Not friend)       getAllCitiesOfState()   |              - deleteComment();
+            |                                                                                                          |
+            |                                                            _ createText();                               |-followWall  - createFollow(); 
+controllers |-> wallController ->createWall(),readWall(),deleteWall(); -|_ createImage();----------------------------->|               deleteFollow();
+            |                   (ref -> user) shareWall()y,getPhotos(); |_ createVideo();                              |
+            |                                                              ( BLOB, CLOB)                               |_shareWall   - shareWallUrl();
+            |                                                                                                                                                                                                                                                                                                                           
+            |                                                                          
+            |
+            |
+            |
+            |-> subcription controller (ref friends, users, groups)-> groupsController -> readGroups(), deleteGroup(),     (ref -> user)
+                                                                   -> friendsController -> readFriends(), deleteFriend(),  (ref -> user)
+                                                                    
+
+
+
+           
+                  |----> addMembers  ---> sendFriendRequest(), acceptFriendRequest(), rejectFriendRequest()
+                  |
+                  |
+                  |
+memberController--|----> sendMessage ---> send message
+                  |
+                  |
+                  | 
+                  |----> viewProfile ---> viewProfile();
+            
+
+
+
+
+
+
+photoController--> fetch images by id from wallModel(using loopUp) and display (if exists), readPhotoByUserId();       [  getPhotos() in wallController  ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                                                       
+
+
+
+
+
+
+
+
+
+
+
+md5(password) => RSA, 
+
+
+         | users -> {
+         |           userName: { type: String, required: true, unique: true}, ___                                                                           
+         |           email : { type: String, required:true, }, |                      
+         |           password: {type: String, required: true}, |  
+         |           Gender: {gender: { type: String, enum: { values: ['Male', 'Female', 'Other'] } }}
+         |           Profession: {type: String}
+	 |	     CityId: {type: mongoose.Schema.Types.ObjectId}   
+	 |	     StateId: {type:mongoose.Schema.Types.ObjectId}
+         |             
+	 | Sate -> {
+	 |           name: {type:String}
+	 |	    }
+	 |
+	 | City -> {
+	 |           name: {type:String}
+	 |           StateId: {type:mongoose.Schema.Types.ObjectId}
+	 |	    }
+         |          
+         |
+         |                                  
+         |            |-Content(Description) {type:String}     |---------->likeModel----> wall: { type: mongoose.Schema.Types.ObjectId, ref: "Wall",},
+         |            |- text - (BLOB/CLOB)                    |                       -> user: { type: String, required: true, },
+models ->|-wallModel -|- image - (BLOB/CLOB)-------------------| 
+         |            |- video - (BLOB/CLOB)                   |         
+         |               ref: user                             |---------->commentModel-> 
+         |            (Something should be there)              |                  -> user:{ type: mongoose.Schema.Types.ObjectId,ref:"User",required:true},
+         |                                                     |                       -> body: { type: String, required: true }
+         |                                                     |
+         |                                                     |---------->shareModel ??-> wall: { type: mongoose.Schema.Types.ObjectId, ref: "Wall",},
+         |                                                     |
+         |                                                     |
+         |                                                     |---------->Follow     ??-> user: { type: mongoose.Schema.Types.ObjectId, ref: "User",},   
+         |                                          
+         |
+         |
+         |             -> name:        { type: String, required: true}   
+         |- groupModel -> joinedUser:  { type: mongoose.Schema.Types.ObjectId, enum: { _id: ['id1', 'id2', 'id3'] } }
+         |             -> description: { type: String }          
+         |             -> image:       { (BLOB/CLOB)  } 
+         |
+         |
+         |
+         |
+         |                          |------> groupsModel -> user: { type: mongoose.Schema.Types.ObjectId, ref: "group",} 
+         |-subscriptionModel--------|
+                                    |
+                                    |------> friendModel -> user: { type: mongoose.Schema.Types.ObjectId, ref: "User",}
+                                    |
+                                    |
+                                    |______> userModel   -> user: { type: mongoose.Schema.Types.ObjectId, ref: "User",}
+         
+         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         
+
+
+             |----> addMembers
+             |
+             |
+             |
+memberModel--|----> sendMessage
+             |
+             |
+             | 
+             |----> viewProfile 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
